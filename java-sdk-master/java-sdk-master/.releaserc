@@ -1,0 +1,32 @@
+{
+  "branch": "master",
+  "debug": true,
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "bumpversion --current-version ${lastRelease.version} --new-version ${nextRelease.version} --verbose --allow-dirty patch"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "message": "docs(release): Add release notes for ${nextRelease.version}"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "ibm-watson/build/libs/*.jar",
+            "name": "ibm-watson-${nextRelease.version}-jar-with-dependencies.jar"
+          }
+        ]
+      }
+    ]
+  ]
+}
